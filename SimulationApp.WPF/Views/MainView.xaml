@@ -1,0 +1,66 @@
+﻿<views:MvxWpfView x:TypeArguments="viewModels:MainViewModel"
+                  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"                  
+                  xmlns:viewModels="clr-namespace:SimulationApp.Core.ViewModels;assembly=SimulationApp.Core"
+                  xmlns:views="clr-namespace:MvvmCross.Platforms.Wpf.Views;assembly=MvvmCross.Platforms.Wpf"
+                  
+                  x:Class="SimulationApp.WPF.Views.MainView">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="20*"/>
+            <ColumnDefinition Width="90*"/>
+        </Grid.ColumnDefinitions>
+
+        <StackPanel Margin="5">
+
+            <!--Buttons-->
+            <StackPanel Margin="5">
+
+                <Button Content="Create new"
+                        Command="{Binding CreateNewCommand}"
+                        Margin="0,5"/>
+
+                <StackPanel Orientation="Horizontal"
+                            HorizontalAlignment="Center">
+
+                    <Button Content="Start"
+                            Command="{Binding StartCommand}"
+                            Width="50"
+                            Margin="5"/>
+
+                    <Button Content="Pause"
+                            Command="{Binding PauseCommand}"
+                            Width="50"
+                            Margin="5"/>
+
+                </StackPanel>
+
+            </StackPanel>
+
+        </StackPanel>
+
+        <ItemsControl ItemsSource="{Binding SimulationService.Cells}"
+                      Grid.Column="1">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <Canvas/>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <Rectangle Fill="{Binding State, Converter={StaticResource StateToColorConverter}}"
+                               Width="{Binding Width}"
+                               Height="{Binding Height}"
+                               Margin="0.5">
+                        <Rectangle.RenderTransform>
+                            <TranslateTransform X="{Binding X}" Y="{Binding Y}"/>
+                        </Rectangle.RenderTransform>
+                    </Rectangle>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+
+    </Grid>
+
+</views:MvxWpfView>
